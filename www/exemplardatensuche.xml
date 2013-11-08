@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchPlugin xmlns="http://www.mozilla.org/2006/browser/search/" xmlns:os="http://a9.com/-/spec/opensearch/1.1/">
+<os:ShortName>Exemplardaten</os:ShortName>
+<os:Description>Suche nach Exemplardaten im Lokalsystem (Signaturensuche)</os:Description>
+<os:InputEncoding>UTF-8</os:InputEncoding>
+<!-- Add a nice icon -->
+<!--
+<os:Image width="16" height="16">data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAD////9/////f////3////9/////f////3////9/////f////3////9/////f////3////9/////f////3////9/////f////3////9/////f////3////9/////f////3////9/////f////3////9/////f////3////9/////f////3////9/////d/GvP2+i3n9olg9/a5tVf3NpZb9/////f////3////99Ovo/erY0v3////99Ovo/erY0v3////9/////bFyW/2bSy79m0su/ZtLLv2bSy795dDI/f////3kz8f9/////c2llv2bSy79/////alkTP26g3D9/////bR4Yv2bSy79m0su/ZtLLv2bSy79mEcp/f////3MpJX9m0su/fjz8f3NpZb9m0su/eDIv/2bSy790Kqc/c2ll/2bSy79m0su/ZtLLv2bSy79m0su/ZdFJ/3////9zaWW/ZtLLv3x5+P9zaWW/ZtLLv27hXL9m0su/ebSyv2tbFX9m0su/ZtLLv2bSy79m0su/ZtLLv2XRSf9/////c2llv2bSy798efj/c2llv2bSy79/////bh+av3CkYD9m0su/ZtLLv2bSy79m0su/ZtLLv2bSy79l0Un/f////3NpZb9m0su/fHn4/3NpZb9m0su/ZtLLv2bSy79zqeZ/ZtLLv2bSy79m0su/ZtLLv2bSy79m0su/ZtLLv2aSSv9mkos/ZtLLv2aSSv9zKSV/f////3////9/////f////2tbFT9m0su/ZtLLv2bSy79m0su/ZtLLv2bSy79m0su/ZtLLv2bSy79m0su/dOwpP3////9/////f////3////9zqeZ/ZtLLv2bSy79m0su/ZtLLv2bSy79m0su/ZtLLv2bSy79m0su/aFWO/3////9/////f////3////9/////f////20eGL9m0su/ZtLLv2bSy79m0su/ZtLLv2bSy79m0su/ZtLLv3m0sr9/////f////3////9/////f////3////9/////bFyW/2bSy79m0su/ZtLLv2bSy79m0su/ZtLLv3jzMT9/////f////3////9/////f////3////9/////f////3////938a8/cKRgP2fUjb9rGpS/c2llv38+fj9/////f////3////9/////f////3////9/////f////3////9/////f////3////9/////f////3////9/////f////3////9/////f////3////9/////f////3////9/////f////3////9/////f////3////9/////f////3////9/////f////3////9/////f////3////9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</os:Image>
+-->
+<os:Url type="text/html" method="GET" template="http://your.server.name/ausleihen/perl/exemplare.pl?shelfmark={searchTerms}&amp;Suchen=Suchen" />
+</SearchPlugin>

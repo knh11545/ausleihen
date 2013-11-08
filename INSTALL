@@ -1,0 +1,99 @@
+INSTALLATION
+
+Beware: This whole thing is just a bunch of scripts! It is historically grown and sometimes really ugly.  However, the system has been serving its purpose for years pretty well.
+
+There is no such thing as an install script or central configuration. There are several rather independent components that need to be dealt with separately. Anyway, installation should be pretty clear from this description.
+
+
+SISIS connection
+################
+
+You need to connect to the Sybase database of your SISIS system with the Perl module DBD::Sybase. See there for more infomation. I have been using the FreeTDS driver for years but the proprietary Sybase OpenClient libraries might be better. 
+
+Ask yout SISIS administrator for read-only access to the tables d01buch and d02ben.
+
+BEWARE: Sensitive user data ist stored in the SISIS table d02ben. None of this will be retrieved by these scripts nor stored in the MySQL database. Just make sure to obey any rules to be obeyed!
+
+
+MySQL database
+##############
+
+Usage data are stored in a MySQL database "bestand". Set up this database:
+
+mysqladmin create bestand
+mysql -e bestand < sql/structure_bestand.sql
+mysql -e bestand < sql/d01status.sql
+
+Creata a MySQL user for the scripts accessing the bestand database (read, write, delete).
+
+Edit the following tables:
+
++ Add branch libraries to table branch_libraries
++ Add locations/holding segments to table locations. locations have a branch library (locations.branch_id = branch_libraries.id). The field shelfmark must contain a selfmark pattern for an SQL LIKE-query to identify a holding segment. For these holding segments summarizing statitics are save into the table loan_statistics.
+
+
+Retrieving usage data from SISIS
+################################
+
+Edit cron/get_loan_statistics.pl and cron/loan_statistics.sh to adapt to your environment.
+
+Add shelfmark patterns of textbooks to @shelfmark_patterns in cron/loan_statistics.sh. For every book/copy retrieved by each of these shelfmark patterns an entry of the loan status is saved. This will usually only make sense for textbooks.
+
+Run cron/loan_statistics.sh daily as a cronjob, preferably some time in the night when the circulation desk is closed. This will save the daily usage data to the MySQL database.
+
+
+Backup of database
+##################
+
+cron/dump_db_bestand.sh is a backup script of the database that may be installed as a cron job that runs daily.
+
+
+Web interface
+#############
+
+Due to historical reasons (e.g. difficulties to access Sybase from PHP) there are PHP and Perl components.
+
+Put the directory www into a directory that will be served by your webserver (e.g. /var/www/bestand).
+
+Adapt your webserver's configuration. You might want to restrict access to library staff only.
+
+An example for the apache web server:
+
+Alias /bestand "/var/www/bestand"
+<Directory /var/www/bestand>
+        AllowOverride None
+        Order allow,deny
+        Allow from 127.0.0.0/255.0.0.0 
+		# Add any IP adresses that should have access to the line above
+</Directory>
+<Directory /var/www/bestand/perl>
+        SetHandler perl-script
+        PerlHandler Apache::Registry
+        Options ExecCGI
+        PerlSendHeader On
+</Directory>
+
+
+Edit the following files to adapt to your environment (database connection, some URLS/path names):
+
+/var/www/bestand/perl/exemplare.pl
+
+/var/www/bestand/ausleihen/index.php
+
+/var/www/bestand/ausleihen/details.php
+
+Firefox search plugins: 
+
+/var/www/bestand/exemplardatensuche.xml: Will provide current status information of books (and othe media) directly from SISIS. Not just for textbooks. Search for a complete shelfmark (Signatur).
+
+/var/www/bestand/ausleihen/benutzung_lehrbuch.xml: Will provide detailed statistics about a textbook's usage. Only for copies stored in local MySQL database bestand. Search for a complete shelfmark (Signatur).
+
+
+For more information on Firefox search plugins see https://developer.mozilla.org/en/docs/Creating_OpenSearch_plugins_for_Firefox
+
+For the users of the system I recommend a Firefox add-on to make better use of the search plugins, such as "Context Search".
+
+
+
+Helge Knüttel, 2013
+
