@@ -69,6 +69,7 @@ Alias /bestand "/var/www/bestand"
 <Directory /var/www/bestand/perl>
         SetHandler perl-script
         PerlHandler Apache::Registry
+		# PerlHandler ModPerl::Registry  # Use this line instead of the one above when using mod_perl
         Options ExecCGI
         PerlSendHeader On
 </Directory>
