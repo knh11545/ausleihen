@@ -41,6 +41,10 @@ Add shelfmark patterns of textbooks to @shelfmark_patterns in cron/loan_statisti
 
 Run cron/loan_statistics.sh daily as a cronjob, preferably some time in the night when the circulation desk is closed. This will save the daily usage data to the MySQL database.
 
+cron/loan_statistics.sh will not transfer values to the table cache_verfuegbarkeit if that table is empty. Therefore, after the first run of the script new data will be in table loan_status but not yet in cache_verfuegbarkeit. You need to run the following mysql command manually to start filling cache_verfuegbarkeit:
+
+# Update table with summarising statistics starting with some date in the past:
+/usr/bin/mysql -e 'SELECT @max_cache_date := '2010-01-01'; REPLACE INTO cache_verfuegbarkeit SELECT date, left(d01ort, locate("/", d01ort) -1 ) as standort, d01katkey, MIN(d01ort) AS basissignatur, COUNT(DISTINCT d01ort) AS exemplare, SUM(IF(d01status=0,1,0)) AS frei, SUM(IF(d01status=4,1,0)) AS ausgeliehen, SUM(IF(d01status=2,1,0)) AS bestellt, SUM(IF(d01status=8,1,0)) AS rueckversand FROM loan_status l0 WHERE d01katkey>0  AND date > @max_cache_date GROUP BY d01katkey, date, left(d01ort, locate("/", d01ort) -1 ) with rollup having date is not null;' bestand
 
 Backup of database
 ##################
