@@ -191,7 +191,7 @@ else
 
 	#$query = "select year(date) as year, month(date) as month, day(date) as day, exemplare, frei, ausgeliehen, bestellt, rueckversand from cache_verfuegbarkeit where d01katkey = $katkey order by date;";
 	if ($standort) {
-		$query = "select year(date) as year, month(date) as month, day(date) as day, exemplare, (exemplare - frei) as belegt from cache_verfuegbarkeit where d01katkey = $katkey AND standort = $standort order by date;";
+		$query = "select year(date) as year, month(date) as month, day(date) as day, exemplare, (exemplare - frei) as belegt from cache_verfuegbarkeit where d01katkey = $katkey AND standort = '$standort' order by date;";
 	} else {
 		$query = "select year(date) as year, month(date) as month, day(date) as day, exemplare, (exemplare - frei) as belegt from cache_verfuegbarkeit where d01katkey = $katkey AND standort IS NULL order by date;";
 	}
